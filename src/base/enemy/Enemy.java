@@ -3,6 +3,8 @@ package base.enemy;
 import base.FrameCounter;
 import base.GameObject;
 import base.game.GameCanvas;
+import base.physics.BoxCollider;
+import base.physics.Physics;
 import base.renderer.AnimationRenderer;
 import base.renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;
@@ -10,7 +12,8 @@ import tklibs.SpriteUtils;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class Enemy extends GameObject {
+public class Enemy extends GameObject implements Physics {
+    BoxCollider boxCollider;
     FrameCounter fireCounter;
 
     public Enemy() {
@@ -19,6 +22,7 @@ public class Enemy extends GameObject {
         this.velocity.set(0, 3);
         this.createRenderer();
         this.fireCounter = new FrameCounter(20);
+        this.boxCollider = new BoxCollider(this.position, 28, 28);
     }
 
     private void createRenderer() {
@@ -49,4 +53,15 @@ public class Enemy extends GameObject {
         }
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        EnemyExplosion explosion = GameObject.recycle(EnemyExplosion.class);
+        explosion.position.set(this.position);
+    }
+
+    @Override
+    public BoxCollider getBoxCollider() {
+        return this.boxCollider;
+    }
 }
