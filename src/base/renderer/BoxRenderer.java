@@ -14,8 +14,8 @@ public class BoxRenderer extends Renderer{
 
     @Override
     public void render(Graphics g, GameObject master) {
+        g.setColor(Color.GREEN);
         g.fillRect((int)boxCollider.masterPosition.x, (int)boxCollider.masterPosition.y,
                 boxCollider.width, boxCollider.height);
-        g.setColor(Color.GREEN);
     }
 }
