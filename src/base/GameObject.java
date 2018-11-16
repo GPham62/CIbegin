@@ -45,10 +45,6 @@ public class GameObject {
 
     /**
      * tra ve 1 gameObject co kieu clazz(E) intersect voi gameObject
-     * @param clazz
-     * @param
-     * @param <E>
-     * @return
      */
     public static <E extends GameObject> E intersects(Class<E> clazz, BoxCollider boxCollider){
         //gameObjects > result ( result instanceof E, result instanceof Physics,

@@ -7,6 +7,7 @@ import base.KeyEventPress;
 import base.physics.BoxCollider;
 import base.physics.Physics;
 import base.renderer.AnimationRenderer;
+import base.renderer.BoxRenderer;
 import base.renderer.SingleImageRenderer;
 import tklibs.SpriteUtils;
 
@@ -18,10 +19,11 @@ public class Player extends GameObject implements Physics {
     FrameCounter fireCounter;
     public Player() {
         super();
-        this.createRenderer();
+        //this.createRenderer();
         this.position.set(200, 300);
         this.fireCounter = new FrameCounter(20);
         this.boxCollider = new BoxCollider(this.position, 32, 48);
+        this.renderer = new BoxRenderer(this.boxCollider);
     }
 
     private void createRenderer() {
@@ -79,6 +81,13 @@ public class Player extends GameObject implements Physics {
         bullet3.velocity.set(5, -5);
 
         this.fireCounter.reset();
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        PlayerExplosion explosion = GameObject.recycle(PlayerExplosion.class);
+        explosion.position.set(this.position);
     }
 
     @Override
